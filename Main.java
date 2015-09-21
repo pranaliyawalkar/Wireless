@@ -10,10 +10,15 @@ public class Main {
 	ArrayList<ArrayList<Integer>> pairs;
 	BaseStation bs;
 	int algo_number = 1;
+	static PrintWriter out;
 	
-	public static void main(String[] args) {	
+	public static void main(String[] args) throws Exception {	
 		Main m1 = new Main();
-		m1.init();
+		out = new PrintWriter(new File("src/4_with_freq.csv"));
+		for (int i = 0;i < 40000; i++) {
+			m1.init();
+		}
+		out.close();
 	}
 	
 	public void init() {
@@ -36,14 +41,15 @@ public class Main {
 		}
 		bs = new BaseStation(Parameters.D2Dpairs);
 		pairs = generate_pairs();
-		if (algo_number ==1 ) {
+		/*if (algo_number ==1 )*/ {
 			Algo1 algo1 = new Algo1(pairs, cell);
-			algo1.process_algo();
+			algo1.process_algo(out);
 		}
-		else if (algo_number ==2 ) {
+		/*else if (algo_number ==2 )*/ {
 			Algo2 algo2 = new Algo2(pairs, cell);
-			algo2.process_algo();
+			algo2.process_algo(out);
 		}
+		out.println();
 
 	}
 	public ArrayList<ArrayList<Integer>> generate_pairs() {

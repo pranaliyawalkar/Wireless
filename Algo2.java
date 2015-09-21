@@ -6,6 +6,9 @@ public class Algo2 extends Algo {
 			time_slots = 5;
 			pairs = inputpairs;
 			cell = input_cell;
+			time_slots_given = new ArrayList<Integer>();
+			time_slots_needed = new ArrayList<Integer>();
+			last_failed_transmissions = new ArrayList<Integer>();
 			for (int i = 0;i < pairs.size(); i++)  {
 				time_slots_needed.add(time_slots);
 				time_slots_given.add(0);

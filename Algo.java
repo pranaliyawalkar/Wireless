@@ -1,3 +1,4 @@
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Algo {
@@ -23,7 +24,7 @@ public class Algo {
 		}
 	}
 	
-	public void process_algo () {
+	public void process_algo (PrintWriter out) {
 		int time_slot = 0; // total time slots needed for all D2D discoveries
 		
 		//finding time slots needed to detect n D2D pairs
@@ -57,6 +58,8 @@ public class Algo {
 			}
 			time_slot++;
 		}
+		System.out.println(time_slot);
+		out.print(time_slot + " , ");
 	}
 	
 	public int discovered_discarded_pairs() {
