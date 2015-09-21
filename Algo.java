@@ -1,6 +1,8 @@
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import org.omg.PortableInterceptor.INACTIVE;
+
 public class Algo {
 	int time_slots;
 	ArrayList<ArrayList<Integer>> pairs;
@@ -9,7 +11,7 @@ public class Algo {
 	ArrayList<Integer> last_failed_transmissions;
 	ArrayList<Device> cell;
 	int algo_number;
-	
+	int discovery_message_time_slot;
 	public Algo() {
 		
 	}
@@ -24,12 +26,12 @@ public class Algo {
 		}
 	}
 	
-	public void process_algo (PrintWriter out) {
+	public int process_algo (PrintWriter out) {
 		int time_slot = 0; // total time slots needed for all D2D discoveries
 		
 		//finding time slots needed to detect n D2D pairs
 		while(true) {
-			
+			//System.out.println(time_slots_needed);
 			//selecting pairs based on transmission probability in each time slot
 			ArrayList<Integer> selected_pairs = select_pairs();
 			if (selected_pairs.size() == 0) { //all pairs discovered or discarded or couldn't get a chance
@@ -40,7 +42,7 @@ public class Algo {
 				else //all pairs discovered or discarded
 					break;
 			}
-			
+			time_slot++;
 			for (int i = 0; i < selected_pairs.size(); i++) {
 				int selected_pair = selected_pairs.get(i);
 				
@@ -56,16 +58,21 @@ public class Algo {
 					last_failed_transmissions.set(selected_pair, last_failed_transmissions.get(selected_pair) + 1);
 				}
 			}
-			time_slot++;
 		}
-		System.out.println(time_slot);
 		out.print(time_slot + " , ");
+		return time_slot;
 	}
 	
 	public int discovered_discarded_pairs() {
 			int count = 0;
 			for (int i = 0 ;i < Parameters.D2Dpairs; i++) {
-				if (time_slots_needed.get(i) == 0 || last_failed_transmissions.get(i) == Parameters.retransmissions)
+				int curr_time_slot = time_slots - time_slots_needed.get(i);
+				if (time_slots_needed.get(i) == 0 
+						|| (last_failed_transmissions.get(i) == Parameters.retransmissions 
+							&& curr_time_slot == discovery_message_time_slot)
+						|| (curr_time_slot != discovery_message_time_slot
+							&& last_failed_transmissions.get(i) == Parameters.retransmission_TM)
+					)
 					count++;
 			}
 			return count;
@@ -75,12 +82,14 @@ public class Algo {
 			ArrayList<Integer> selected_pairs = new ArrayList<>();
 			for (int i = 0;i < Parameters.D2Dpairs; i++) {
 				double probab = Math.random();
+				int curr_time_slot = time_slots - time_slots_needed.get(i);
 				if (
 					probab  <= Parameters.transmission_probability
 					&& time_slots_needed.get(i) > 0 
-					&& last_failed_transmissions.get(i) < Parameters.retransmissions
 				)
-					selected_pairs.add(i);
+					if ((curr_time_slot == discovery_message_time_slot && last_failed_transmissions.get(i) < Parameters.retransmissions)
+							|| (curr_time_slot != discovery_message_time_slot && last_failed_transmissions.get(i) < Parameters.retransmission_TM))
+						selected_pairs.add(i);
 			}
 			return selected_pairs;
 		}
