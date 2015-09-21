@@ -23,7 +23,7 @@ public class Algo1 extends Algo {
 		if ( step == 0) {
 			//UE1 sends TM to BS requesting connection with UE2
 			TransmissionMessage tm1 = new TransmissionMessage();
-			tm1.feed_sinr(cell.get(ue1), selected_pairs);
+			tm1.feed_sinr(cell.get(ue1), selected_pairs, pairs, cell, true);
 			if (tm1.SINR < Parameters.sinr_cell)
 				return false;
 			return true;
@@ -31,7 +31,7 @@ public class Algo1 extends Algo {
 		if (step == 1) {
 			// BS tells UE2 to be ready to receive DM
 			TransmissionMessage tm2 = new TransmissionMessage();
-			tm2.feed_sinr(cell.get(ue2), selected_pairs);
+			tm2.feed_sinr(cell.get(ue2), selected_pairs, pairs, cell, false);
 			if (tm2.SINR < Parameters.sinr_cell)
 				return false;
 			return true;
@@ -39,19 +39,15 @@ public class Algo1 extends Algo {
 		if ( step == 2) {
 			//BS instructs UE1 to send DM to UE2
 			TransmissionMessage tm3 = new TransmissionMessage();
-			tm3.feed_sinr(cell.get(ue1), selected_pairs);
+			tm3.feed_sinr(cell.get(ue1), selected_pairs, pairs, cell, false);
 			if (tm3.SINR < Parameters.sinr_cell)
 				return false;
 			return true;
 		}
 		if (step == 3) {
 			//UE1 sends DM to UE2
-			DiscoveryMessage dm1 = new DiscoveryMessage();
-			dm1.transmitter = ue1;
-			dm1.receiver = ue2;
-			
-			//calculating SINR
-			dm1.feed_sinr(cell.get(ue1), cell.get(ue2), selected_pairs);
+			DiscoveryMessage dm1 = new DiscoveryMessage(ue1, ue2);
+			dm1.feed_sinr(cell.get(ue1), cell.get(ue2), selected_pairs, pairs, cell);
 			if (dm1.SINR < Parameters.sinr_d2d)
 				return false;
 			return true;
@@ -60,7 +56,7 @@ public class Algo1 extends Algo {
 		if ( step == 4) {
 			//UE2 sends measurement results to BS
 			TransmissionMessage tm4 = new TransmissionMessage();
-			tm4.feed_sinr(cell.get(ue2), selected_pairs);
+			tm4.feed_sinr(cell.get(ue2), selected_pairs, pairs, cell, true);
 			if (tm4.SINR < Parameters.sinr_cell)
 				return false;
 			return true;
@@ -69,10 +65,10 @@ public class Algo1 extends Algo {
 			//BS tells both UE1 and UE2 to listen for interference
 			// TODO it has to listen for n time slots, n = no. of D2D pairs
 			TransmissionMessage tm5 = new TransmissionMessage();
-			tm5.feed_sinr(cell.get(ue1), selected_pairs);
+			tm5.feed_sinr(cell.get(ue1), selected_pairs, pairs, cell, false);
 			
 			TransmissionMessage tm6 = new TransmissionMessage();
-			tm6.feed_sinr(cell.get(ue2), selected_pairs);
+			tm6.feed_sinr(cell.get(ue2), selected_pairs, pairs, cell, false);
 			
 			if (tm5.SINR < Parameters.sinr_cell)
 				return false;
@@ -83,7 +79,7 @@ public class Algo1 extends Algo {
 		if ( step == 6) {
 			//UE1 sends interference measurement results to BS
 			TransmissionMessage tm7 = new TransmissionMessage();
-			tm7.feed_sinr(cell.get(ue1), selected_pairs);
+			tm7.feed_sinr(cell.get(ue1), selected_pairs, pairs, cell, true);
 			
 			if (tm7.SINR < Parameters.sinr_cell)
 				return false;
@@ -92,7 +88,7 @@ public class Algo1 extends Algo {
 		if (step == 7) {
 			//UE2 sends interference measurement results to BS
 			TransmissionMessage tm8 = new TransmissionMessage();
-			tm8.feed_sinr(cell.get(ue2), selected_pairs);
+			tm8.feed_sinr(cell.get(ue2), selected_pairs, pairs, cell, true);
 			
 			if (tm8.SINR < Parameters.sinr_cell)
 				return false;
@@ -102,10 +98,10 @@ public class Algo1 extends Algo {
 		if ( step == 8) {
 			//BS sends message to UE1 and UE2 to start their communication
 			TransmissionMessage tm9 = new TransmissionMessage();
-			tm9.feed_sinr(cell.get(ue1), selected_pairs);
+			tm9.feed_sinr(cell.get(ue1), selected_pairs, pairs, cell, false);
 			
 			TransmissionMessage tm10 = new TransmissionMessage();
-			tm10.feed_sinr(cell.get(ue2), selected_pairs);
+			tm10.feed_sinr(cell.get(ue2), selected_pairs, pairs, cell, false);
 			
 			if (tm9.SINR < Parameters.sinr_cell)
 				return false;
