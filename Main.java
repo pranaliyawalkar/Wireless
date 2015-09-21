@@ -10,7 +10,6 @@ public class Main {
 	ArrayList<ArrayList<Integer>> pairs;
 	BaseStation bs;
 	int algo_number = 1;
-	Parameters params = new Parameters();
 	
 	public static void main(String[] args) {	
 		Main m1 = new Main();
@@ -22,8 +21,8 @@ public class Main {
 		Random random_number_genrator = new Random();
 		HashSet<String> taken = new HashSet<>();
 		int i = 0;
-		while(i < params.cell_size)  {
-			int r = random_number_genrator.nextInt(params.cell_radius+1); // 0 to cell_radius
+		while(i < Parameters.cell_size)  {
+			int r = random_number_genrator.nextInt(Parameters.cell_radius+1); // 0 to cell_radius
 			int theta = random_number_genrator.nextInt(360); //0 to 259
 			if (taken.contains(r + "_" + theta)) {
 				continue;
@@ -35,7 +34,7 @@ public class Main {
 			cell.add(d1);
 			i++;
 		}
-		bs = new BaseStation(params.D2Dpairs);
+		bs = new BaseStation(Parameters.D2Dpairs);
 		pairs = generate_pairs();
 		if (algo_number ==1 ) {
 			Algo1 algo1 = new Algo1(pairs, cell);
@@ -54,11 +53,11 @@ public class Main {
 		HashSet<Integer> taken = new HashSet<>();
 		for (int i = 0;i < bs.n ; i++) {
 			ArrayList<Integer> pair = new ArrayList<Integer>();
-			int device1 = random_number_generator.nextInt(params.cell_size);
+			int device1 = random_number_generator.nextInt(Parameters.cell_size);
 			taken.add(device1);
-			int device2 = random_number_generator.nextInt(params.cell_size);
+			int device2 = random_number_generator.nextInt(Parameters.cell_size);
 			while (taken.contains(device2))
-				device2 = random_number_generator.nextInt(params.cell_size);
+				device2 = random_number_generator.nextInt(Parameters.cell_size);
 			taken.add(device2);
 			pair.add(device1);
 			pair.add(device2);
