@@ -89,20 +89,20 @@ public class Main {
 		}
 		
 		process_algo(
-				algo_number, 
-				pairs, 
-				time_slots_needed, 
-				time_slots_given, 
-				last_failed_transmissions
+			algo_number, 
+			pairs, 
+			time_slots_needed, 
+			time_slots_given, 
+			last_failed_transmissions
 		);
 	}
 	
 	public void process_algo (
-			int algo_number,
-			ArrayList<ArrayList<Integer>> pairs,
-			ArrayList<Integer> time_slots_needed,
-			ArrayList<Integer> time_slots_given,
-			ArrayList<Integer> last_failed_transmissions
+		int algo_number,
+		ArrayList<ArrayList<Integer>> pairs,
+		ArrayList<Integer> time_slots_needed,
+		ArrayList<Integer> time_slots_given,
+		ArrayList<Integer> last_failed_transmissions
 	) {
 		int time_slot = 0; // total time slots needed for all D2D discoveries
 		
@@ -155,10 +155,10 @@ public class Main {
 	}
 	
 	public boolean make_transmission(
-			int algo_number, 
-			int selected_pair, 
-			ArrayList<ArrayList<Integer>> pairs,
-			ArrayList<Integer> time_slots_needed
+		int algo_number, 
+		int selected_pair, 
+		ArrayList<ArrayList<Integer>> pairs,
+		ArrayList<Integer> time_slots_needed
 	) {
 		if (algo_number == 1)
 			return make_transmission_algo1(selected_pair, pairs, time_slots_needed);
@@ -167,10 +167,10 @@ public class Main {
 	}
 	
 	public boolean make_transmission_algo1(
-			int selected_pair, 
-			ArrayList<ArrayList<Integer>> pairs,
-			ArrayList<Integer> time_slots_needed 
-			) {
+		int selected_pair, 
+		ArrayList<ArrayList<Integer>> pairs,
+		ArrayList<Integer> time_slots_needed 
+	) {
 		
 		boolean success = true;
 		/***
@@ -183,10 +183,10 @@ public class Main {
 	}
 	
 	public boolean make_transmission_algo2(
-			int selected_pair, 
-			ArrayList<ArrayList<Integer>> pairs,
-			ArrayList<Integer> time_slots_needed 
-			) {
+		int selected_pair, 
+		ArrayList<ArrayList<Integer>> pairs,
+		ArrayList<Integer> time_slots_needed 
+	) {
 		
 		boolean success = true;
 		/***
