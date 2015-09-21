@@ -69,7 +69,6 @@ public class Algo1 extends Algo {
 		}
 		if (step == 5) {
 			//BS tells both UE1 and UE2 to listen for interference
-			// TODO it has to listen for n time slots, n = no. of D2D pairs
 			TransmissionMessage tm5 = new TransmissionMessage();
 			tm5.feed_sinr(cell.get(ue1), selected_pair, selected_pairs, pairs, cell, false);
 			
