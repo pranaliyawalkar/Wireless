@@ -4,7 +4,9 @@ public class TransmissionMessage {
 	//what should come here?
 	int transmitter;
 	int receiver;
-	double interference; //values it carried from devices to D2D
+	double received_interference; //values it carries from devices to BS
+	double received_pathgain;
+	double received_sinr;
 	double SINR; //should meet γCELL
 
 	public void feed_sinr(

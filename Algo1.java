@@ -47,8 +47,8 @@ public class Algo1 extends Algo {
 		if (step == 3) {
 			//UE1 sends DM to UE2
 			DiscoveryMessage dm1 = new DiscoveryMessage();
-			dm1.transmitter = pairs.get(selected_pair).get(0);
-			dm1.receiver = pairs.get(selected_pair).get(1);
+			dm1.transmitter = ue1;
+			dm1.receiver = ue2;
 			
 			//calculating SINR
 			dm1.feed_sinr(cell.get(ue1), cell.get(ue2), selected_pairs);
