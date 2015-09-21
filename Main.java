@@ -38,11 +38,11 @@ public class Main {
 		bs = new BaseStation(params.D2Dpairs);
 		pairs = generate_pairs();
 		if (algo_number ==1 ) {
-			Algo1 algo1 = new Algo1(pairs);
+			Algo1 algo1 = new Algo1(pairs, cell);
 			algo1.process_algo();
 		}
 		else if (algo_number ==2 ) {
-			Algo2 algo2 = new Algo2(pairs);
+			Algo2 algo2 = new Algo2(pairs, cell);
 			algo2.process_algo();
 		}
 

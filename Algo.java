@@ -6,15 +6,16 @@ public class Algo {
 	ArrayList<Integer> time_slots_needed;
 	ArrayList<Integer> time_slots_given;
 	ArrayList<Integer> last_failed_transmissions;
+	ArrayList<Device> cell;
 	int algo_number;
-	Parameters params = new Parameters();
 	
 	public Algo() {
 		
 	}
 	
-	public Algo(ArrayList<ArrayList<Integer>> inputpairs) {
+	public Algo(ArrayList<ArrayList<Integer>> inputpairs,ArrayList<Device> input_cell) {
 		pairs = inputpairs;
+		cell = input_cell;
 		for (int i = 0;i < pairs.size(); i++)  {
 			time_slots_needed.add(time_slots);
 			time_slots_given.add(0);
@@ -33,7 +34,7 @@ public class Algo {
 			if (selected_pairs.size() == 0) { //all pairs discovered or discarded or couldn't get a chance
 				
 				int check_count = discovered_discarded_pairs();
-				if (check_count < params.D2Dpairs)
+				if (check_count < Parameters.D2Dpairs)
 					continue; 
 				else //all pairs discovered or discarded
 					break;
@@ -60,8 +61,8 @@ public class Algo {
 	
 	public int discovered_discarded_pairs() {
 			int count = 0;
-			for (int i = 0 ;i < params.D2Dpairs; i++) {
-				if (time_slots_needed.get(i) == 0 || last_failed_transmissions.get(i) == params.retransmissions)
+			for (int i = 0 ;i < Parameters.D2Dpairs; i++) {
+				if (time_slots_needed.get(i) == 0 || last_failed_transmissions.get(i) == Parameters.retransmissions)
 					count++;
 			}
 			return count;
@@ -69,12 +70,12 @@ public class Algo {
 	
 	public ArrayList<Integer> select_pairs() {
 			ArrayList<Integer> selected_pairs = new ArrayList<>();
-			for (int i = 0;i < params.D2Dpairs; i++) {
+			for (int i = 0;i < Parameters.D2Dpairs; i++) {
 				double probab = Math.random();
 				if (
-					probab  <= params.transmission_probability
+					probab  <= Parameters.transmission_probability
 					&& time_slots_needed.get(i) > 0 
-					&& last_failed_transmissions.get(i) < params.retransmissions
+					&& last_failed_transmissions.get(i) < Parameters.retransmissions
 				)
 					selected_pairs.add(i);
 			}
