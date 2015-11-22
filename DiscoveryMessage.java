@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 public class DiscoveryMessage extends Message {
 	//should have info about transmitter, receiver

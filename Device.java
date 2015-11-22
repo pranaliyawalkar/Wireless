@@ -1,7 +1,7 @@
 public class Device {
 	int id;
-	double x; //x coordinate
-	double y; //y coordinate
+	double x; //x coordinate in meter
+	double y; //y coordinate in meter
 	
 	public Device(){
 		

@@ -1,0 +1,13 @@
+1. Run instructions : 
+	a. Set the value of D2Dpairs variable in Parameters.java to the required number of D2D pairs (2 or 4)
+	b. Run javac Main.java
+	c. Run java Main
+	d. This will generate 2.csv or 4.csv depending on D2Dpairs chosen
+	
+2. The csv file contains 2 columns :
+	i. First column : total number of time slots required for discovery of all the D2D pairs using algorithm1
+	ii. Second column : total number of time slots required for discovery of all the D2D pairs using algorithm2
+	
+3. The csv contains 40000 rows, one for each simulation
+
+4. The plots having the cdf of time slots consumed can be generated using the generatePlots.m script
