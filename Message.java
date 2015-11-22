@@ -67,9 +67,9 @@ public class Message {
 			mult = dist/10;
 		double alpha = mult * (1- Math.exp(-dist/36));
 		alpha += Math.exp(-dist/36);
-		double PL_LOS = (22* Math.log10(dist)) + 42;
-		double PL_NLOS = (36.7* Math.log10(dist)) + 40.9;
-		return (alpha * PL_LOS) + ((1-alpha)*PL_NLOS); //equation 6
+		double PL_LOS = (22* Math.log10(dist)) + 42 ;
+		double PL_NLOS = (36.7* Math.log10(dist)) + 40.9 ;
+		return (alpha * PL_LOS) + ((1-alpha)*PL_NLOS) - 100 ; //equation 6
 	}
 	
 	//between 2 devices
@@ -83,8 +83,8 @@ public class Message {
 		else if (dist >= 60)
 			alpha = 0;
 		
-		double PL_LOS = (16.9* Math.log10(dist)) + 46.8;
+		double PL_LOS = (16.9* Math.log10(dist)) + 46.8 ;
 		double PL_NLOS = (40* Math.log10(dist)) + 49;
-		return (alpha * PL_LOS) + ((1-alpha)*PL_NLOS); //equation 6
+		return (alpha * PL_LOS) + ((1-alpha)*PL_NLOS) - 80; //equation 6
 	}
 }
