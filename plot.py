@@ -2,7 +2,7 @@ import csv
 import collections
 import matplotlib.pyplot as plt
 
-filename = '2.csv'
+filename = '4.csv'
 num_iter = float(40000)
 algo1 = {}
 algo2 = {}
@@ -23,27 +23,22 @@ with open(filename, 'rb') as csvfile:
       algo2[slots] = algo2[slots] + 1
     else:
       algo2[slots] = 1
+  
+algo1 = collections.OrderedDict(sorted(algo1.items()))
+algo2 = collections.OrderedDict(sorted(algo2.items()))
 
 algo1.update((x, y / num_iter) for x, y in algo1.items())
 algo2.update((x, y / num_iter) for x, y in algo2.items())
 
-print algo2
-keylist = algo1.keys()
-keylist.sort()
-
 algo1_cdf = 0
-for key in keylist:
+for key in algo1:
   algo1_cdf = algo1_cdf + algo1[key]
   algo1[key] = algo1_cdf
 
 algo2_cdf = 0
-keylist = algo2.keys()
-keylist.sort()
-for key in keylist:
+for key in algo2:
   algo2_cdf = algo2_cdf + algo2[key]
   algo2[key] = algo2_cdf
-
-print algo2
 
 plot_algo1 = plt.step(algo1.keys(), algo1.values(), label='Algo 1')
 plot_algo2 = plt.step(algo2.keys(), algo2.values(), label='Algo 2')
