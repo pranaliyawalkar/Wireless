@@ -9,8 +9,10 @@ public class Main {
 	static PrintWriter out;
 	
 	public static void main(String[] args) throws Exception {
+		/*Analysis an = new Analysis();
+		an.process();*/
+		
 		out = new PrintWriter(new File("src/" + Parameters.D2Dpairs + ".csv"));
-		out.println("Algo1" + "," + "Algo2");
 		for (int i = 0;i < 40000; i++) { //40000 simulations
 			Main m1 = new Main();
 			m1.init();
@@ -23,8 +25,11 @@ public class Main {
 		Random random_number_genrator = new Random();
 		HashSet<String> taken = new HashSet<>();
 		int i = 0;
+		taken.add("0_0");
 		while(i < Parameters.cell_size)  {
 			int r = random_number_genrator.nextInt(Parameters.cell_radius+1); // 0 to cell_radius
+			if (r == 0)
+				r = 1;
 			int theta = random_number_genrator.nextInt(360); //0 to 259
 			if (taken.contains(r + "_" + theta)) {
 				continue;
@@ -46,7 +51,10 @@ public class Main {
 		algo1.process_algo(out);
 		out.print(",");
 		algo2.process_algo(out);
-		
+		/*out.print(",");
+		out.print(algo1.transmit_power_consumed/algo1.time_slots + "," + algo2.transmit_power_consumed/algo2.time_slots);
+		out.print(",");
+		out.print(algo1.through_put + "," + algo2.through_put);*/
 		out.println();
 	}
 	
@@ -59,6 +67,8 @@ public class Main {
 		for (int i = 0;i < Parameters.D2Dpairs ; i++) {
 			ArrayList<Integer> pair = new ArrayList<Integer>();
 			int device1 = random_number_generator.nextInt(Parameters.cell_size);
+			while (taken.contains(device1))
+				device1 = random_number_generator.nextInt(Parameters.cell_size);
 			taken.add(device1);
 			int device2 = random_number_generator.nextInt(Parameters.cell_size);
 			while (taken.contains(device2))

@@ -7,11 +7,12 @@ public class Parameters {
 	static double transmit_power_devices = Math.pow(10, -0.9);  //Watt
 	static int cell_size = 50;  //50 devices
 	static int cell_radius = 400; //in meter
-	static int D2Dpairs = 4;  //no. of D2D pairs
+	static int D2Dpairs = 2;  //no. of D2D pairs
 	static double eta = 0.95; //success probability
 	static double transmission_probability = 1/(double)D2Dpairs; //equation 2
 	static double p_success = transmission_probability * Math.pow(1 - transmission_probability, D2Dpairs-1); //equation 1
 	static int retransmissions = (int) (Math.log(1- eta)/ Math.log(1 - p_success)) ; //equation 5, retransmissions allowed on a discovery message
-	static int retransmission_TM = 12; //no. of retransmissions allowed on a transmission message
-	static long frequency = 100;  //in MHz table 1
+	static int retransmission_TM = 8; //no. of retransmissions allowed on a transmission message
+	static long frequency = 6;  //in MHz
+	static double device_freq = 0.05;  //in MHz
 }

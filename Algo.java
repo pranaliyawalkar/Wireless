@@ -10,6 +10,8 @@ public class Algo {
 	ArrayList<Integer> last_failed_transmissions;  //for each pair, how many transmissions has it failed
 	ArrayList<Device> cell; //all the devices in the region
 	int discovery_message_time_slot;  //the time slot when discovery message is sent
+	double transmit_power_consumed;
+	double through_put;
 	
 	public int process_algo (PrintWriter out) {
 		int time_slot = 0; // total time slots needed for all D2D discoveries

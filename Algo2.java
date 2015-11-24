@@ -10,6 +10,8 @@ public class Algo2 extends Algo {
 			time_slots_given = new ArrayList<Integer>();
 			time_slots_needed = new ArrayList<Integer>();
 			last_failed_transmissions = new ArrayList<Integer>();
+			transmit_power_consumed = 0;
+			through_put = 0;
 			for (int i = 0;i < pairs.size(); i++)  {
 				time_slots_needed.add(time_slots);
 				time_slots_given.add(0);
@@ -31,6 +33,8 @@ public class Algo2 extends Algo {
 			//UE1 sends Discovery Message to UE2
 			DiscoveryMessage dm1 = new DiscoveryMessage(ue1, ue2);
 			dm1.feed_sinr(cell.get(ue1), cell.get(ue2), selected_pair, selected_pairs, pairs, cell);
+			transmit_power_consumed += dm1.transmit_power_consumed;
+			through_put += dm1.through_put;
 			if (dm1.SINR < Parameters.sinr_d2d)
 				return false;  //failure
 			return true;  //success
@@ -39,7 +43,9 @@ public class Algo2 extends Algo {
 		if (step == 1) {
 			//UE2 replies to UE1 with the received SINR value, the path gain from BS and interference
 			TransmissionMessage tm1 = new TransmissionMessage();
-			tm1.feed_sinr(cell.get(ue2), cell.get(ue2), selected_pair, selected_pairs, pairs, cell);
+			tm1.feed_sinr(cell.get(ue1), cell.get(ue2), selected_pair, selected_pairs, pairs, cell);
+			transmit_power_consumed += tm1.transmit_power_consumed;
+			through_put += tm1.through_put;
 			if (tm1.SINR < Parameters.sinr_cell)
 				return false;  //failure
 			return true;  //success
@@ -50,6 +56,8 @@ public class Algo2 extends Algo {
 			//UE1 replies to BS with path gain, SINR and interference for both UE1 and UE2
 			TransmissionMessage tm2 = new TransmissionMessage();
 			tm2.feed_sinr(cell.get(ue1), selected_pair, selected_pairs, pairs, cell, true);
+			transmit_power_consumed += tm2.transmit_power_consumed;
+			through_put += tm2.through_put;
 			if (tm2.SINR < Parameters.sinr_cell)
 				return false;  //failure
 			return true;  //success
@@ -62,6 +70,12 @@ public class Algo2 extends Algo {
 			
 			TransmissionMessage tm4 = new TransmissionMessage();
 			tm4.feed_sinr(cell.get(ue2), selected_pair, selected_pairs, pairs, cell, false);
+			
+			transmit_power_consumed += tm3.transmit_power_consumed;
+			transmit_power_consumed += tm4.transmit_power_consumed;
+			
+			through_put += tm3.through_put;
+			through_put += tm4.through_put;
 			
 			if (tm3.SINR < Parameters.sinr_cell)
 				return false;  //failure
